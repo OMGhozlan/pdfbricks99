@@ -276,8 +276,21 @@ GAME_CONFIGS = {
         "field_indexes": [],
         "obj_idx_ctr": 50
     },
-    "shooter": {
-        "script_path": "src/games/shoot/shooter.js",
+    "snake": {
+        "script_path": "src/games/snake/snake.js",
+        "PX_SIZE": 20,
+        "GRID_WIDTH": 10,
+        "GRID_HEIGHT": 20,
+        "GRID_OFF_X": 100,
+        "GRID_OFF_Y": 100,
+        "BUTTON_SIZE": 40,
+        "BUTTON_SPACING": 10,
+        "fields_text": "",
+        "field_indexes": [],
+        "obj_idx_ctr": 50
+    },
+    "shoot": {
+        "script_path": "src/games/shoot/shoot.js",
         "PX_SIZE": 20,
         "GRID_WIDTH": 10,
         "GRID_HEIGHT": 20,
@@ -426,17 +439,33 @@ def generate_game_fields(config):
         text = text.replace("###RECT###", f"{x} {y} {x + width} {y + height}")
         add_field(text, config)
 
-    add_button(config, "<", "B_left", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 70, 50, 50, "move_left();")
-    add_button(config, ">", "B_right", config['GRID_OFF_X'] + 60, config['GRID_OFF_Y'] - 70, 50, 50, "move_right();")
-    add_button(config, "\\\\/", "B_down", config['GRID_OFF_X'] + 30, config['GRID_OFF_Y'] - 130, 50, 50, "lower_piece();")
-    add_button(config, "SPIN", "B_rotate", config['GRID_OFF_X'] + 140, config['GRID_OFF_Y'] - 70, 50, 50, "rotate_piece();")
-    add_button(config, "SPIN", "B_space", config['GRID_OFF_X'] + 200, config['GRID_OFF_Y'] - 70, 50, 50, "rotate_piece();")
+    button_panel_x = config['GRID_OFF_X'] + config['GRID_WIDTH'] * config['PX_SIZE'] + 20
+    button_panel_y = config['GRID_OFF_Y']
+    
+    # add_button(config, "<", "B_left", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 70, 50, 50, "move_left();")
+    # add_button(config, ">", "B_right", config['GRID_OFF_X'] + 60, config['GRID_OFF_Y'] - 70, 50, 50, "move_right();")
+    # add_button(config, "\\\\/", "B_down", config['GRID_OFF_X'] + 30, config['GRID_OFF_Y'] - 130, 50, 50, "lower_piece();")
+    # add_button(config, "SPIN", "B_rotate", config['GRID_OFF_X'] + 140, config['GRID_OFF_Y'] - 70, 50, 50, "rotate_piece();")
+    
+    # Shooter attempt
+    # add_button(config, "<", "B_left", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 70, 50, 50, "movePlayer('left');")
+    # add_button(config, ">", "B_right", config['GRID_OFF_X'] + 60, config['GRID_OFF_Y'] - 70, 50, 50, "movePlayer('right');")
+    # add_button(config, "\\\\/", "B_down", config['GRID_OFF_X'] + 30, config['GRID_OFF_Y'] - 130, 50, 50, "movePlayer('right');")    
+    # add_button(config, "SHOOT", "B_shoot", config['GRID_OFF_X'] + 140, config['GRID_OFF_Y'] - 70, 50, 50, "shoot();")
+    # add_button(config, "SPIN", "B_space", config['GRID_OFF_X'] + 200, config['GRID_OFF_Y'] - 70, 50, 50, "rotate_piece();")
+    
+    # Snake button
+    add_button(config, "v", "B_up", button_panel_x + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], button_panel_y, config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_up")
+    add_button(config, "^", "B_down", button_panel_x + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_down")
+    add_button(config, "<", "B_left", button_panel_x, button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_left")
+    add_button(config, ">", "B_right", button_panel_x + 2 * config['BUTTON_SIZE'] + 2 * config['BUTTON_SPACING'], button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_right")    
+    add_button(config, "Start game", "B_start", config['GRID_OFF_X'] + (config['GRID_WIDTH']*config['PX_SIZE'])/2-50, config['GRID_OFF_Y'] + (config['GRID_HEIGHT']*config['PX_SIZE'])/2-50, 100, 100, "game_init")
+    add_text(config, "Type here for keyboard controls (WASD)", "T_input", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 200, config['GRID_WIDTH']*config['PX_SIZE'], 50, "handle_input")    
+    
+    # add_button(config, "Start game", "B_start", config['GRID_OFF_X'] + (config['GRID_WIDTH']*config['PX_SIZE'])/2-50, config['GRID_OFF_Y'] + (config['GRID_HEIGHT']*config['PX_SIZE'])/2-50, 100, 100, "game_init();")
+    # add_text(config, "Type here for keyboard controls (WASD)", "T_input", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 200, config['GRID_WIDTH']*config['PX_SIZE'], 50, "handle_input(event);")
 
-    add_button(config, "Start game", "B_start", config['GRID_OFF_X'] + (config['GRID_WIDTH']*config['PX_SIZE'])/2-50, config['GRID_OFF_Y'] + (config['GRID_HEIGHT']*config['PX_SIZE'])/2-50, 100, 100, "game_init();")
-
-    add_text(config, "Type here for keyboard controls (WASD)", "T_input", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 200, config['GRID_WIDTH']*config['PX_SIZE'], 50, "handle_input(event);")
-
-    add_text(config, "Score: 0", "T_score", config['GRID_OFF_X'] + config['GRID_WIDTH']*config['PX_SIZE']+10, config['GRID_OFF_Y'] + config['GRID_HEIGHT']*config['PX_SIZE']-50, 100, 50, "")
+    add_text(config, "Score: 0", "Score", config['GRID_OFF_X'] + config['GRID_WIDTH']*config['PX_SIZE']+10, config['GRID_OFF_Y'] + config['GRID_HEIGHT']*config['PX_SIZE']-50, 100, 50, "")
 
 
 def generate_script(games):
@@ -471,7 +500,8 @@ def generate_script(games):
 if __name__ == "__main__":
     log = setup_logging(debug=True)
     games = [
-        {"name": "Tetris", "value": "tetris"},
+        # {"name": "Tetris", "value": "tetris"},
+        {"name": "snake", "value": "snake"},
         # {"name": "Shoot", "value": "shoot"}
     ]
-    generate_pdf("game.pdf", games)
+    generate_pdf("game3.pdf", games)
