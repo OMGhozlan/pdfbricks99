@@ -1,5 +1,3 @@
-# README.md
-
 # PDFBrickGame9999In1
 
 ## Overview
