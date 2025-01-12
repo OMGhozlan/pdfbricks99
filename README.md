@@ -1,5 +1,3 @@
-# README.md
-
 # PDFBrickGame9999In1
 
 ## Overview
@@ -7,7 +5,7 @@ A goofy attempt at extending the amazing work done in [pdftris](https://github.c
 
 ## Project Structure
 ```
-pdf-game-generator
+pdfbricks99
 ├── src
 │   ├── games
 │   │   ├── snake
@@ -28,7 +26,7 @@ pdf-game-generator
 ## Setup Instructions
 1. Clone the repository:
    ```
-   git clone <repository-url>
+   git clone https://github.com/OMGhozlan/pdfbricks99
    cd pdfbricks99
    ```
 
