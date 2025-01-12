@@ -1,7 +1,6 @@
 import os
 from utils.prettylogger import setup_logging
 
-# Rule: Use descriptive variable names
 PDF_FILE_TEMPLATE = """
 %PDF-1.6
 
@@ -263,7 +262,6 @@ endobj
 endobj
 """
 
-# Rule: Use dictionaries for modular and scalable design
 GAME_CONFIGS = {
     "tetris": {
         "script_path": "src/games/tetris/tetris.js",
@@ -299,7 +297,20 @@ GAME_CONFIGS = {
         "fields_text": "",
         "field_indexes": [],
         "obj_idx_ctr": 50
-    }
+    },
+    "flappy_bird": {
+        "script_path": "src/games/flappy_bird/flappy_bird.js",
+        "PX_SIZE": 5,
+        "GRID_WIDTH": 40,
+        "GRID_HEIGHT": 80,
+        "GRID_OFF_X": 200,
+        "GRID_OFF_Y": 350,
+        "BUTTON_SIZE": 40,
+        "BUTTON_SPACING": 10,
+        "fields_text": "",
+        "field_indexes": [],
+        "obj_idx_ctr": 50
+    },
     # Add other games here similarly
 }
 
@@ -455,12 +466,17 @@ def generate_game_fields(config):
     # add_button(config, "SPIN", "B_space", config['GRID_OFF_X'] + 200, config['GRID_OFF_Y'] - 70, 50, 50, "rotate_piece();")
     
     # Snake button
-    add_button(config, "v", "B_up", button_panel_x + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], button_panel_y, config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_up")
-    add_button(config, "^", "B_down", button_panel_x + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_down")
-    add_button(config, "<", "B_left", button_panel_x, button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_left")
-    add_button(config, ">", "B_right", button_panel_x + 2 * config['BUTTON_SIZE'] + 2 * config['BUTTON_SPACING'], button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_right")    
-    add_button(config, "Start game", "B_start", config['GRID_OFF_X'] + (config['GRID_WIDTH']*config['PX_SIZE'])/2-50, config['GRID_OFF_Y'] + (config['GRID_HEIGHT']*config['PX_SIZE'])/2-50, 100, 100, "game_init")
-    add_text(config, "Type here for keyboard controls (WASD)", "T_input", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 200, config['GRID_WIDTH']*config['PX_SIZE'], 50, "handle_input")    
+    # add_button(config, "v", "B_up", button_panel_x + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], button_panel_y, config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_up")
+    # add_button(config, "^", "B_down", button_panel_x + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_down")
+    # add_button(config, "<", "B_left", button_panel_x, button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_left")
+    # add_button(config, ">", "B_right", button_panel_x + 2 * config['BUTTON_SIZE'] + 2 * config['BUTTON_SPACING'], button_panel_y + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], config['BUTTON_SIZE'], config['BUTTON_SIZE'], "move_right")    
+    # add_button(config, "Start game", "B_start", config['GRID_OFF_X'] + (config['GRID_WIDTH']*config['PX_SIZE'])/2-50, config['GRID_OFF_Y'] + (config['GRID_HEIGHT']*config['PX_SIZE'])/2-50, 100, 100, "game_init")
+    # add_text(config, "Type here for keyboard controls (WASD)", "T_input", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 200, config['GRID_WIDTH']*config['PX_SIZE'], 50, "handle_input")    
+    
+    # Flappy Bird
+    add_button(config, "Flap", "B_flap", button_panel_x + config['BUTTON_SIZE'] + config['BUTTON_SPACING'], button_panel_y, config['BUTTON_SIZE'], config['BUTTON_SIZE'], "flap()")
+    add_button(config, "Start game", "B_start", config['GRID_OFF_X'] + (config['GRID_WIDTH']*config['PX_SIZE'])/2-50, config['GRID_OFF_Y'] + (config['GRID_HEIGHT']*config['PX_SIZE'])/2-50, 100, 100, "game_init()")
+    add_text(config, "Flap with Space or W", "T_input", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 200, config['GRID_WIDTH']*config['PX_SIZE'], 50, "handle_input(event);")
     
     # add_button(config, "Start game", "B_start", config['GRID_OFF_X'] + (config['GRID_WIDTH']*config['PX_SIZE'])/2-50, config['GRID_OFF_Y'] + (config['GRID_HEIGHT']*config['PX_SIZE'])/2-50, 100, 100, "game_init();")
     # add_text(config, "Type here for keyboard controls (WASD)", "T_input", config['GRID_OFF_X'] + 0, config['GRID_OFF_Y'] - 200, config['GRID_WIDTH']*config['PX_SIZE'], 50, "handle_input(event);")
@@ -501,7 +517,8 @@ if __name__ == "__main__":
     log = setup_logging(debug=True)
     games = [
         # {"name": "Tetris", "value": "tetris"},
-        {"name": "snake", "value": "snake"},
+        # {"name": "snake", "value": "snake"},
         # {"name": "Shoot", "value": "shoot"}
+        {"name": "flappy_bird", "value": "flappy_bird"},
     ]
-    generate_pdf("game3.pdf", games)
+    generate_pdf("flappy_birdG.pdf", games)
